@@ -1,0 +1,109 @@
+  <ul class="nav nav-tabs  m-tabs-line" role="tablist">
+    <li class="nav-item m-tabs__item">
+      <a class="nav-link m-tabs__link active" routerLink="/admin/roles" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+true}">Roller</a>
+    </li>
+    <li class="nav-item m-tabs__item">
+      <a class="nav-link m-tabs__link" routerLink="/admin/roles/perms" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+true}">İzinler</a>
+    </li>
+  </ul>
+  <div class="row">
+        <div class="col-md-4">
+          <div class="m-portlet m-portlet--tab">
+            <div class="m-portlet__head">
+              <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                  <h3 class="m-portlet__head-text">
+                    Rol Ekle
+                  </h3>
+                </div>
+              </div>
+            </div>
+            <form method="post" id="category-create" class="m-form m-form--fit m-form--label-align-right" #createRoleForm="ngForm" (ngSubmit)="createRoleForm.form.valid && onSubmit(createRoleForm.value)">
+              <div class="m-portlet__body">
+                <input type="hidden" name="id" [(ngModel)]="role.id">
+                <div [class]="createRoleForm.submitted && name.invalid ? 'form-group m-form__group has-danger' : 'form-group m-form__group'">
+                  <input type="text" class="form-control m-input" name="name" placeholder="İsim" [(ngModel)]="role.name" #name="ngModel" [ngClass]="{ 'is-invalid': createRoleForm.submitted && name.invalid }" required>
+                  <div class="form-control-feedback" *ngIf="createRoleForm.submitted && name.invalid">Role ismi gereklidir.</div>
+                </div>
+                <div [class]="createRoleForm.submitted && slug.invalid ? 'form-group m-form__group has-danger' : 'form-group m-form__group'">
+                  <input type="text" class="form-control m-input" name="slug" placeholder="Kısa İsim" [(ngModel)]="role.slug" #slug="ngModel" [ngClass]="{ 'is-invalid': createRoleForm.submitted && slug.invalid }" required>
+                  <div class="form-control-feedback" *ngIf="createRoleForm.submitted && slug.invalid">Role kısa ismi gereklidir.</div>
+                </div>
+                <div class="form-group m-form__group">
+                  <select name="status" class="form-control" [(ngModel)]="role.status">
+                    <option value="1">Aktif</option>
+                    <option value="0">Pasif</option>
+                  </select>
+                </div>
+              </div>
+              <div class="m-portlet__foot m-portlet__foot--fit">
+                <div class="m-form__actions text-right">
+                  <input type="reset" value="Sıfırla" class="btn btn-default reset-button">
+                  <button type="submit" class="btn btn-success m-btn m-btn--icon">
+                  <span>
+                      <i class="flaticon-multimedia-2"></i>
+                      <span>Kaydet</span>
+                  </span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="m-portlet m-portlet--tab">
+            <div class="m-portlet__head">
+              <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                  <h3 class="m-portlet__head-text">
+                    Roller
+                  </h3>
+                </div>
+              </div>
+            </div>
+            <div class="m-portlet__body">
+              <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
+                <thead>
+                <tr>
+                  <th style="width: 50px;">ID</th>
+                  <th>Kısa Ad</th>
+                  <th style="width: 20%;">İsim</th>
+                  <th style="width: 160px;">Oluşturma</th>
+                  <th style="width: 120px;">Durum</th>
+                  <th style="width: 50px;">İşlem</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr *ngFor="let role of results.data.roles">
+                  <td>{{ role.id }}</td>
+                  <td>{{ role.slug }}</td>
+                  <td>{{ role.name }}</td>
+                  <td>{{ role.created_at }}</td>
+                  <td>{{ role.statusText }}</td>
+                  <td>
+                    <a href="javascript:;" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Düzenle" (click)="onClick(role.id)" *ngIf="role.status != 2">
+                      <i class="la la-edit"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit">
+              <div class="m-form__actions">
+                <pager
+                        *ngIf="results && results.pageLinks.last_page > 1"
+                        [total]="results.pageLinks.total"
+                        [per_page]="results.pageLinks.per_page"
+                        [current_page]="page"
+                        [last_page]="results.pageLinks.last_page"
+                        [pages]="results.pageLinks.pages"
+                        (changePage)="page = $event"></pager>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>

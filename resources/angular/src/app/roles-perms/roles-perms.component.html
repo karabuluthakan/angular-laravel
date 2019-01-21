@@ -1,0 +1,122 @@
+<ul class="nav nav-tabs  m-tabs-line" role="tablist" style="margin-top: -15px">
+  <li class="nav-item m-tabs__item">
+    <a class="nav-link m-tabs__link" routerLink="/admin/roles" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+true}">Roller</a>
+  </li>
+  <li class="nav-item m-tabs__item">
+    <a class="nav-link m-tabs__link" routerLink="/admin/roles/perms" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+true}">İzinler</a>
+  </li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="m-portlet m-portlet--tab">
+      <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+              İzinler
+            </h3>
+          </div>
+        </div>
+        <div class="m-portlet__head-tools">
+          <ul class="m-portlet__nav">
+            <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
+              <a href="#" class="m-portlet__nav-link btn btn-secondary m-btn m-btn--icon m-btn--icon-only m-btn--pill   m-dropdown__toggle">
+                <i class="la la-ellipsis-v"></i>
+              </a>
+              <div class="m-dropdown__wrapper" style="z-index: 101;">
+                <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 21.5px;"></span>
+                <div class="m-dropdown__inner">
+                  <div class="m-dropdown__body" style="padding: 10px 20px">
+                    <div class="m-dropdown__content">
+                      <ul class="m-nav">
+                        <li class="m-nav__item">
+                          <a href="javascript:;" class="m-nav__link" data-toggle="modal" data-target="#selectRolesModal">
+                            <i class="m-nav__link-icon flaticon-user-settings"></i>
+                            <span class="m-nav__link-text">Roller</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <form class="m-form m-form--fit m-form--label-align-right ng-untouched ng-pristine ng-invalid" id="category-create" method="post" novalidate="">
+        <div class="m-portlet__body" style="padding: 0">
+          <table class="table table-striped- table-bordered table-hover table-checkable" style="margin: 0">
+            <thead>
+            <tr>
+              <th></th>
+              <th *ngFor="let id of activeRoles">{{ roles[id].name }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let has_perm of results.data.has_perms">
+              <td>{{ has_perm.name }}</td>
+              <td *ngFor="let id of activeRoles">
+                <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                  <label>
+                  <input type="checkbox" name="{{ has_perm.perm + '_' + id }}" [(ngModel)]="has_perm.roles[id]" (change)="setRolePerm(id, has_perm.perm, has_perm.roles[id])">
+                  <span></span>
+                  </label>
+                </span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+          <div class="m-form__actions text-right" style="padding: 10px 20px">
+            <input type="reset" value="Sıfırla" class="btn btn-default reset-button">
+            <button type="submit" class="btn btn-success m-btn m-btn--icon">
+              <span>
+                  <i class="flaticon-multimedia-2"></i>
+                  <span>Kaydet</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--begin::Modal-->
+<div class="modal fade" id="selectRolesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding: 0">
+        <table class="table table-striped- table-hover table-checkable" style="margin: 0">
+          <tbody>
+          <tr *ngFor="let role_id of _getRolesIds()">
+            <td style="padding-top: 20px">{{ selecRoles[role_id].name }}</td>
+            <td class="text-center">
+              <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+              <label style="margin: 0">
+              <input type="checkbox" name="role_{{ role_id }}" [(ngModel)]="selecRoles[role_id].active">
+              <span></span>
+              </label>
+            </span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="setActiveRoles()">Kaydet</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end::Modal-->

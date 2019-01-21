@@ -1,0 +1,103 @@
+  <div class="row">
+    <div class="col-md-4">
+      <div class="m-portlet m-portlet--tab">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <h3 class="m-portlet__head-text">
+                Kategori Ekle
+              </h3>
+            </div>
+          </div>
+        </div>
+        <form method="post" id="category-create" class="m-form m-form--fit m-form--label-align-right" #createCategoryForm="ngForm" (ngSubmit)="createCategoryForm.form.valid && onSubmit(createCategoryForm.value)">
+          <div class="m-portlet__body">
+            <input type="hidden" name="id" [(ngModel)]="category.id">
+            <input type="hidden" name="parent" [(ngModel)]="category.parent">
+            <div class="form-group m-form__group">
+              <!--begin: Dropdown-->
+              <div [class]="searchParent.value && !category.parent ? 'm-dropdown m-dropdown--arrow m-dropdown--open' : 'm-dropdown m-dropdown--arrow'">
+                <div class="input-group">
+                  <input type="text" class="form-control" [value]="category.pathName" *ngIf="category.parent" disabled>
+                  <input type="text" class="form-control" placeholder="Üst kategori" [formControl]="searchParent" *ngIf="!category.parent">
+                  <i class="flaticon-refresh" *ngIf="category.parent" (click)="setParent(0)"></i>
+                </div>
+                <div class="m-dropdown__wrapper">
+                  <span class="m-dropdown__arrow m-dropdown__arrow--left"></span>
+                  <div class="m-dropdown__inner">
+                    <div class="m-dropdown__body">
+                      <div class="m-dropdown__content">
+                        <ul id="sscat-results" class="m-nav">
+                          <li *ngFor="let category of searchResult.categories" (click)="setParent(category.id)">{{ category.pathName }}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--end: Dropdown-->
+            </div>
+            <div [class]="createCategoryForm.submitted && name.invalid ? 'form-group m-form__group has-danger' : 'form-group m-form__group'">
+              <input type="text" class="form-control m-input" name="name" placeholder="Başlık" [(ngModel)]="category.name" #name="ngModel" [ngClass]="{ 'is-invalid': createCategoryForm.submitted && name.invalid }" required>
+              <div class="form-control-feedback" *ngIf="createCategoryForm.submitted && name.invalid">Kategori ismi gereklidir.</div>
+            </div>
+            <div class="form-group m-form__group">
+              <textarea name="description" id="cat-description" class="form-control m-input" placeholder="Açıklama" [(ngModel)]="category.description"></textarea>
+            </div>
+          </div>
+          <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions text-right">
+              <input type="reset" value="Sıfırla" class="btn btn-default reset-button">
+              <button type="submit" class="btn btn-success m-btn m-btn--icon">
+                  <span>
+                      <i class="flaticon-multimedia-2"></i>
+                      <span>Kaydet</span>
+                  </span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="column-1" class="col-md-4">
+      <div id="cat-l-{{ results[ind1].data.parentCategory.id }}" class="multi-level-list" [attr.data-cat-level]="ind1" *ngFor="let ind1 of col1">
+        <categories-list
+            [parent]="results[ind1].data.parentCategory.id"
+            [category_name]="results[ind1].data.parentCategory.name"
+            [cl]="ind1"
+            [delete_swal]="deleteSwal"
+            [categories]="results[ind1].data.categories || []"
+            (onSelect)="onSelectCat($event)"
+            (onEdit)="onEditCat($event)"
+            (onDelete)="onDeleteCat($event)">
+        </categories-list>
+      </div>
+    </div>
+    <div id="column-2" class="col-md-4">
+      <div id="parent-{{ results[ind2].data.parentCategory.id }}" class="multi-level-list" [attr.data-cat-level]="ind2" *ngFor="let ind2 of col2">
+        <categories-list
+                [parent]="results[ind2].data.parentCategory.id"
+                [category_name]="results[ind2].data.parentCategory.name"
+                [cl]="ind2"
+                [delete_swal]="deleteSwal"
+                [categories]="results[ind2].data.categories || []"
+                (onSelect)="onSelectCat($event)"
+                (onEdit)="onEditCat($event)"
+                (onDelete)="onDeleteCat($event)">
+        </categories-list>
+      </div>
+    </div>
+  </div>
+
+  <swal
+      #deleteSwal
+      title="{{ delCategory ? delCategory.name : '' }} kategorisi silinecek"
+      text="Kategoriyi silmek istediğinize emin misiniz?"
+      type="warning"
+      [confirmButtonText]="'Sil'"
+      [confirmButtonClass]="'btn btn-danger'"
+      [cancelButtonText]="'Vazgeç'"
+      [showCancelButton]="true"
+      [focusCancel]="true"
+      (confirm)="onDeleteCat(delCategory, true)">
+  </swal>

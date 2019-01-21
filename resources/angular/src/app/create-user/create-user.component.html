@@ -1,0 +1,98 @@
+<!--begin::Portlet-->
+<div class="m-portlet">
+  <!--begin::Form-->
+  <form class="m-form m-form--fit m-form--label-align-right" id="m_form_1" #createUserForm="ngForm" (ngSubmit)="createUserForm.form.valid && onSubmit()">
+    <input type="hidden" name="id" [(ngModel)]="user.id">
+    <div class="m-portlet__body">
+      <div class="m-form__content">
+        <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="m_form_1_msg">
+          <div class="m-alert__icon">
+            <i class="la la-warning"></i>
+          </div>
+          <div class="m-alert__text">
+            Oh snap! Change a few things up and try submitting again.
+          </div>
+          <div class="m-alert__close">
+            <button type="button" class="close" data-close="alert" aria-label="Close">
+            </button>
+          </div>
+        </div>
+      </div>
+      <div [class]="createUserForm.submitted && username.invalid ? 'form-group m-form__group row has-danger' : 'form-group m-form__group row'">
+        <label class="col-form-label col-lg-2 col-md-3 col-xm-12">Kullanıcı Adı *</label>
+        <div class="col-lg-3 col-md-4 col-xs-12">
+          <input type="text" class="form-control m-input" name="username" placeholder="Kullanıcı Adı" data-toggle="m-tooltip" title="info.user_username" [(ngModel)]="user.username" #username="ngModel" [ngClass]="{ 'is-invalid': createUserForm.submitted && username.invalid }" required>
+          <div class="form-control-feedback" *ngIf="createUserForm.submitted && username.invalid">Kullanıcı adı alanı gereklidir.</div>
+        </div>
+      </div>
+      <div class="form-group m-form__group row">
+        <label class="col-form-label col-lg-2 col-md-3 col-xm-12">Adı</label>
+        <div class="col-lg-3 col-md-4 col-xs-12">
+          <input type="text" class="form-control m-input" name="firstname" placeholder="Adı" data-toggle="m-tooltip" title="info.user_firstname" [(ngModel)]="user.firstname">
+        </div>
+      </div>
+      <div class="form-group m-form__group row">
+        <label class="col-form-label col-lg-2 col-md-3 col-xm-12">Soyadı</label>
+        <div class="col-lg-3 col-md-4 col-xs-12">
+          <input type="text" class="form-control m-input" name="lastname" placeholder="Soyadı" data-toggle="m-tooltip" title="info.user_lastname" [(ngModel)]="user.lastname">
+        </div>
+      </div>
+      <div [class]="createUserForm.submitted && email.invalid ? 'form-group m-form__group row has-danger' : 'form-group m-form__group row'">
+        <label class="col-form-label col-lg-2 col-md-3 col-xm-12">E-posta *</label>
+        <div class="col-lg-3 col-md-4 col-xs-12">
+          <input type="text" class="form-control m-input" name="email" placeholder="Kullanıcı Adı" data-toggle="m-tooltip" title="info.user_email" [(ngModel)]="user.email" #email="ngModel" [ngClass]="{ 'is-invalid': createUserForm.submitted && email.invalid }" required>
+          <div class="form-control-feedback" *ngIf="createUserForm.submitted && email.invalid">E-posta alanı gereklidir.</div>
+        </div>
+      </div>
+      <div class="form-group m-form__group row">
+        <label class="col-form-label col-lg-2 col-md-3 col-xm-12">Avatar</label>
+        <div class="col-lg-3 col-md-4 col-xs-12">
+          <img [src]="imageUrl" style="width:250px;height:200px">
+
+          <input type="file" name="avatar" accept="image/*" data-toggle="m-tooltip" title="info.user_avatar" (change)="handleFileInput($event.target.files)" ng2FileSelect [uploader]="uploader">
+        </div>
+      </div>
+      <div [class]="createUserForm.submitted && role_id.invalid ? 'form-group m-form__group row has-danger' : 'form-group m-form__group row'">
+        <label class="col-form-label col-lg-2 col-md-3 col-xm-12">Rol *</label>
+        <div class="col-lg-3 col-md-4 col-xs-12">
+          <select name="role_id" class="form-control" [(ngModel)]="user.role_id" #role_id="ngModel" [ngClass]="{ 'is-invalid': createUserForm.submitted && role_id.invalid }" required>
+            <option *ngFor="let role of main.sherlock.user.roles" [value]="role.value">{{ role.label }}</option>
+          </select>
+          <div class="form-control-feedback" *ngIf="createUserForm.submitted && role_id.invalid">Rol alanı gereklidir.</div>
+        </div>
+      </div>
+      <div class="form-group m-form__group row">
+        <label class="col-form-label col-lg-2 col-md-3 col-xm-12">Parola *</label>
+        <div class="col-lg-2 col-md-3 col-xs-12">
+          <input type="password" name="password" class="form-control m-input" [(ngModel)]="user.password">
+        </div>
+      </div>
+      <div class="form-group m-form__group row">
+        <label class="col-form-label col-lg-2 col-md-3 col-xm-12">Parola Tekrar *</label>
+        <div class="col-lg-2 col-md-3 col-xs-12">
+          <input type="password" name="password_confirmation" class="form-control m-input" [(ngModel)]="user.password_confirmation">
+        </div>
+      </div>
+      <div class="form-group m-form__group row">
+        <label class="col-form-label col-lg-2 col-md-3 col-xm-12">Durum</label>
+        <div class="col-lg-2 col-md-3 col-xs-12">
+          <select name="status" class="form-control" [(ngModel)]="user.status">
+            <option *ngFor="let status of main.sherlock.user.statuses" [value]="status.value">{{ status.label }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="m-portlet__foot m-portlet__foot--fit">
+      <div class="m-form__actions m-form__actions">
+        <div class="row">
+          <div class="col-lg-12 text-right">
+            <button type="reset" class="btn btn-secondary">Sıfırla</button>
+            <button type="submit" class="btn btn-success">Kaydet</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!--end::Form-->
+</div>
+<!--end::Portlet-->

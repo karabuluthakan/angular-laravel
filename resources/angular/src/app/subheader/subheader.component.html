@@ -1,0 +1,22 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a href="http://personalsite.test/admin" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <ng-container *ngFor="let breadcrumb of main.breadcrumbs">
+        <li class="m-nav__separator">-</li>
+        <li class="m-nav__item">
+          <span class="m-nav__link-text" *ngIf="!breadcrumb.path">{{ breadcrumb.title }}</span>
+          <a routerLink="{{ breadcrumb.path }}" routerLinkActive="active" class="m-nav__link" *ngIf="breadcrumb.path"><span class="m-nav__link-text">{{ breadcrumb.title }}</span></a>
+        </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END: Subheader -->

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="tr" >
+<!-- begin::Head -->
+<head>
+  <meta charset="utf-8" />
+
+  <title>Laravel |  posts
+    Ekle </title>
+  <meta name="description" content="Inner page example page">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+
+  <!--begin::Web font -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+  <script>
+      WebFont.load({
+          google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
+          active: function() {
+              sessionStorage.fonts = true;
+          }
+      });
+  </script>
+  <!--end::Web font -->
+
+  <!--begin::Base Styles -->
+  <link href="http://personalsite.test/css/bundle.css" rel="stylesheet" type="text/css" />
+  <link href="http://personalsite.test/css/style.bundle.css" rel="stylesheet" type="text/css" />
+  <!--end::Base Styles -->
+
+  <link href="http://personalsite.test/css/toastr.min.css" rel="stylesheet" type="text/css" />
+
+
+
+  <script type="text/javascript">
+      var sherlock = {
+          token: "fWXh0KysuBQvhQHIZG9YLENdSsKApDfQ7pEcbjDU",
+          ajax_url: "http://personalsite.test/test.php",
+          users: [
+              {
+                  value: 1,
+                  label: "Hakan Karabulut"
+              },
+              {
+                  value: 2,
+                  label: "Halil İbrahim Özdemir"
+              }
+          ]
+      };
+  </script>
+  <base href="/">
+</head>
+<!-- end::Head -->
+
+
+<!-- begin::Body -->
+<body  class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default"  >
+<!-- begin:: Page -->
+<app-root></app-root>
+<!-- end:: Page -->
+
+<script type="text/javascript">
+    sherlock.post = {
+        statuses: [
+            {
+                value: "1",
+                label: "Yayımla"
+            },
+            {
+                value: "0",
+                label: "Yayımda Değil"
+            },
+            {
+                value: "2",
+                label: "Taslak"
+            }
+        ]
+    };
+</script>
+
+<script type="text/javascript">
+    sherlock.page = {
+        statuses: [
+            {
+                value: "1",
+                label: "Yayımla"
+            },
+            {
+                value: "0",
+                label: "Yayımda Değil"
+            },
+            {
+                value: "2",
+                label: "Taslak"
+            }
+        ]
+    };
+</script>
+
+<script type="text/javascript">
+    sherlock.user = {
+        statuses: [
+            {
+                value: "1",
+                label: "Aktif"
+            },
+            {
+                value: "0",
+                label: "Pasif"
+            }
+        ],
+        roles: [
+            {
+                value: "1",
+                label: "Admin"
+            }
+        ]
+    };
+</script>
+
+<script type="text/javascript">
+    sherlock.roles = {
+        statuses: [
+            {
+                value: "1",
+                label: "Aktif"
+            },
+            {
+                value: "0",
+                label: "Pasif"
+            },
+            {
+                value: "2",
+                label: "Korumalı"
+            }
+        ]
+    };
+</script>
+
+<!-- begin::Scroll Top -->
+<div id="m_scroll_top" class="m-scroll-top">
+  <i class="la la-arrow-up"></i>
+</div>
+<!-- end::Scroll Top -->		    <!-- begin::Quick Nav -->
+<!-- begin::Quick Nav -->
+<!--begin::Base Scripts -->
+<script src="http://personalsite.test/js/bundle.js" type="text/javascript"></script>
+<script src="http://personalsite.test/js/scripts.bundle.js" type="text/javascript"></script>
+<!--end::Base Scripts -->
+
+<script src="http://personalsite.test/js/toastr.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    toastr.options = {
+        "positionClass": "toast-bottom-right",
+    };
+
+    (function ($) {
+        $.startLoader = function () {
+            $("body").addClass("sloading");
+        };
+
+        $.stopLoader = function () {
+            $("body").removeClass("sloading");
+        };
+    })(jQuery);
+</script>
+
+<div id="sherlock-loader"><img src="http://personalsite.test/images/loading-bubbles.svg" alt="" width="80"></div>
+
+</body>
+<!-- end::Body -->
+</html>

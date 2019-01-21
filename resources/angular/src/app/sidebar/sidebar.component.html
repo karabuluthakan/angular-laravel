@@ -1,0 +1,42 @@
+<!-- BEGIN: Left Aside -->
+<button class="m-aside-left-close  m-aside-left-close--skin-dark " id="m_aside_left_close_btn"><i
+        class="la la-close"></i></button>
+
+<div id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-dark ">
+  <!-- BEGIN: Aside Menu -->
+  <div
+          id="m_ver_menu"
+          class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark "
+          m-menu-vertical="1"
+          m-menu-scrollable="0" m-menu-dropdown-timeout="500"
+  >
+
+    <ul class="m-menu__nav ">
+      <li [class]="getLinkClass(link)" aria-haspopup="true" [attr.m-menu-submenu-toggle]="link.has_child ? 'hover' : null" *ngFor="let link of filterLinks(results.data.links)" [routerLinkActive]="['m-menu__item--open', 'm-menu__item--expanded']" [routerLinkActiveOptions]="{exact: true}">
+        <a [attr.routerLink]="link.route != 'javascript:;' ? link.route : null" [class]="link.has_child ? 'm-menu__link m-menu__toggle' : 'm-menu__link'" *ngIf="link.type == 1" (click)="expandSubLinks(link)">
+          <span class="m-menu__item-here"></span>
+          <i class="m-menu__link-icon {{ link.icon }}"></i>
+          <span class="m-menu__link-text">{{ link.label }}</span>
+          <i class="m-menu__ver-arrow la la-angle-right" *ngIf="link.has_child"></i>
+        </a>
+
+        <h4 class="m-menu__section-text" *ngIf="link.type == 2">{{ link.label }}</h4>
+        <i class="m-menu__section-icon flaticon-more-v2" *ngIf="link.type == 2"></i>
+
+        <div class="m-menu__submenu" *ngIf="link.type == 1 && link.has_child">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li [routerLinkActive]="['m-menu__item--active']" [routerLinkActiveOptions]="{exact: true}" class="m-menu__item" aria-haspopup="true" *ngFor="let link1 of filterLinks(results.data.links, link.id)">
+              <a routerLink="{{ link1.route != 'javascript:;' ? link1.route : null }}" class="m-menu__link ">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                <span class="m-menu__link-text">{{ link1.label }}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</div>
+<!-- END: Left Aside -->

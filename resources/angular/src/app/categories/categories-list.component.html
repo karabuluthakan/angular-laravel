@@ -1,0 +1,18 @@
+<div class="m-portlet m-portlet--mobile">
+  <div class="m-portlet__head" *ngIf="category_name">
+    <div class="m-portlet__head-caption">
+      <div class="m-portlet__head-title">
+        <h3 class="m-portlet__head-text">{{ category_name }} <span class="m-badge m-badge--danger m-badge--wide" *ngIf="cl > 0">L{{ cl }}</span></h3>
+      </div>
+    </div>
+  </div>
+  <div class="m-portlet__body">
+    <ul class="parents">
+      <li *ngFor="let category of categories">
+        <a href="javascript:;" id="cat-{{ category.id }}" (click)="onSelectClick(category.id)">{{ category.name }}</a>
+        <a href="javascript:;" class="delete" (click)="onDeleteClick(category, delete_swal)"><i class="flaticon-delete-2"></i></a>
+        <a href="javascript:;" class="edit" (click)="onEditClick(category.id)"><i class="flaticon-edit"></i></a>
+      </li>
+    </ul>
+  </div>
+</div>
